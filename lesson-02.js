@@ -10,18 +10,49 @@
 // deliberately and naming everything in camelCase. Log each variable, and add a one-line
 // comment justifying every choice between `const` and `let`.
 
+const shopName = "Maple Market";
+// const is used because the shop name should not change during this exercise.
+const shopCategory = "neighborhood grocery";
+// const is used because the shop category is a fixed description.
+let dailyCustomerCount = 84;
+// let is used because the customer count can change throughout the day.
+let openRegisterCount = 2;
+// let is used because the number of open registers can change.
+const acceptsCardPayments = true;
+// const is used because this payment policy is treated as fixed.
+
+console.log(shopName);
+console.log(shopCategory);
+console.log(dailyCustomerCount);
+console.log(openRegisterCount);
+console.log(acceptsCardPayments);
 
 // TODO: Part two.
 // Log the `typeof` result for each of your five variables, and additionally for `null` and for
 // `undefined`. Note in a comment which one of these results is a famous historical bug of the
 // language.
 
+console.log(typeof shopName);
+console.log(typeof shopCategory);
+console.log(typeof dailyCustomerCount);
+console.log(typeof openRegisterCount);
+console.log(typeof acceptsCardPayments);
+console.log(typeof null);
+// `typeof null` returning "object" is a famous historical bug in JavaScript.
+console.log(typeof undefined);
 
 // TODO: Part three.
 // Declare one variable without assigning it a value, and a second variable set to `null` on
 // purpose. Log both values and both `typeof` results, and state the difference between the two
 // kinds of nothing in one comment sentence.
 
+let currentPromotion;
+const scheduledRestockDate = null;
+console.log(currentPromotion);
+console.log(scheduledRestockDate);
+console.log(typeof currentPromotion);
+console.log(typeof scheduledRestockDate);
+// `undefined` means a variable has been declared but not assigned a value, while `null` is an intentional assignment indicating the absence of any object value.
 
 // TODO: Part four.
 // Convert the three provided string values to their intended types using `Number()` and
@@ -34,6 +65,15 @@ const priceText = "4.50";
 const countText = "12";
 const flagText = "true";
 
+const price = Number(priceText);
+const count = Number(countText);
+const flag = Boolean(flagText);
+const aisleNumberText = String(5);
+console.log(price, typeof price);
+console.log(count, typeof count);
+console.log(flag, typeof flag);
+console.log(aisleNumberText, typeof aisleNumberText);
+// `Number()` would produce `NaN` if `priceText` or `countText` were not a clean number string.
 
 // TODO: Part five.
 // The file ends with a short broken program that contains a reassigned `const`, an assignment
@@ -49,13 +89,27 @@ const flagText = "true";
 // console.log(loafCount);
 // let loafCount = 12;
 
+let bakeryName = 'Maison Sarah';
+// `bakeryName` uses `let` because it is reassigned.
+bakeryName = 'The Corner Bakery';
+const openingHour = 7;
+// `openingHour` is declared before assignment to avoid creating an undeclared variable.
+let loafCount = 12;
+// `loafCount` is declared before it is read.
+console.log(loafCount);
 
 // TODO: Part six.
 // Two variables, `a` and `b`, hold different values. Swap their contents using a third,
 // temporary variable, and log both afterwards to prove the swap succeeded. This is the oldest
 // exercise in programming, and it still earns its place.
 
-
+let a = 'morning';
+let b = 'evening';
+const temporaryValue = a;
+a = b;
+b = temporaryValue;
+console.log(a);
+console.log(b);
 // TODO: Save deliberately, commit with a clear message, push the branch, and open a pull request
 // into main.
 // TODO: Submit the link to the pull request for review.
