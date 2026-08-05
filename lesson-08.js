@@ -10,6 +10,27 @@
 // runtime, and a `describe` method that returns one sentence built from the instance's own
 // properties through `this`. Create two instances with `new` and log both descriptions.
 
+class Artist {
+  constructor(name, genre, total) {
+    this.name = name;
+    this.genre = genre;
+    this.total = total;
+  }
+
+  describe() {
+    return `${this.name}, ${this.genre}, ${this.total} of music`;
+  }
+
+  static named(artists, name) {
+    return artists.find((artist) => artist.name === name);
+  }
+}
+
+const pinkfong = new Artist('Pinkfong', "Children's music", '11:31');
+const cash = new Artist('Johnny Cash', 'Country', '15:40');
+
+console.log(pinkfong.describe());
+console.log(cash.describe());
 
 // TODO: Part two.
 // The file provides the artists as an array of plain objects. Loop over it with `for...of`,
@@ -18,13 +39,23 @@
 
 // * The artists as plain objects, provided:
 const artistData = [
-  { name: "Pinkfong", genre: "Children's music", total: "11:31" },
-  { name: "Adriano Celentano", genre: "Italian pop", total: "20:52" },
-  { name: "Asake", genre: "Afrobeats", total: "14:08" },
-  { name: "Miyagi and Andy Panda", genre: "Hip-hop", total: "16:21" },
-  { name: "Johnny Cash", genre: "Country", total: "15:40" },
+  { name: 'Pinkfong', genre: "Children's music", total: '11:31' },
+  { name: 'Adriano Celentano', genre: 'Italian pop', total: '20:52' },
+  { name: 'Asake', genre: 'Afrobeats', total: '14:08' },
+  { name: 'Miyagi and Andy Panda', genre: 'Hip-hop', total: '16:21' },
+  { name: 'Johnny Cash', genre: 'Country', total: '15:40' },
 ];
 
+const artists = [];
+
+for (const artist of artistData) {
+  const instance = new Artist(artist.name, artist.genre, artist.total);
+  artists.push(instance);
+}
+
+artists.forEach((artist) => {
+  console.log(artist.describe());
+});
 
 // TODO: Part three.
 // The file contains three short snippets: a class call that is missing `new`, an arrow
@@ -41,12 +72,45 @@ const artistData = [
 // * Snippet three, the correct call. Uncomment after part one:
 // console.log(new Artist("Asake", "Afrobeats", "14:08").describe());
 
+// Prediction: Throws a TypeError because the class is called without `new`.
+// const broken = Artist("Pinkfong", "Children's music", "11:31");
+
+// Prediction: Arrow functions don't bind their own `this`, so this.title and this.artist
+// are undefined.
+// const single = {
+//   title: "Hurt",
+//   artist: "Johnny Cash",
+//   describe: () => `${this.title} by ${this.artist}`,
+// };
+// console.log(single.describe());
+
+// Prediction: Works correctly and prints the description.
+console.log(new Artist('Asake', 'Afrobeats', '14:08').describe());
 
 // TODO: Part four.
 // Write a `FeaturedArtist` class that extends `Artist`, adds a blurb property through a
 // constructor that calls `super` first, and overrides `describe` so that it builds on the
 // superclass version through `super.describe()`. Promote one artist and log the result.
 
+class FeaturedArtist extends Artist {
+  constructor(name, genre, total, blurb) {
+    super(name, genre, total);
+    this.blurb = blurb;
+  }
+
+  describe() {
+    return `${super.describe()}. Featured: ${this.blurb}`;
+  }
+}
+
+const featured = new FeaturedArtist(
+  'Asake',
+  'Afrobeats',
+  '14:08',
+  'The loudest new voice out of Lagos',
+);
+
+console.log(featured.describe());
 
 // TODO: Part five.
 // The file ends with a constructor function and two prototype method assignments, working code
@@ -55,17 +119,26 @@ const artistData = [
 // class.
 
 // * Working pre-2015 code, provided. Do not rewrite it, annotate it:
+// class ArtistOld { constructor(name, genre) { ... } }
+// Equivalent to: class Artist + constructor()
 function ArtistOld(name, genre) {
   this.name = name;
   this.genre = genre;
 }
+// class ArtistOld { describe() { ... } }
+// Equivalent to: describe() method
 ArtistOld.prototype.describe = function () {
   return `${this.name}, ${this.genre}`;
 };
+// class ArtistOld { tag() { ... } }
+// Equivalent to: tag() method
 ArtistOld.prototype.tag = function () {
-  return `#${this.genre.toLowerCase().replaceAll(" ", "-").replaceAll("'", "")}`;
+  return `#${this.genre.toLowerCase().replaceAll(' ', '-').replaceAll("'", '')}`;
 };
 
+const oldArtist = new ArtistOld('Asake', 'Afrobeats');
+console.log(oldArtist.describe());
+console.log(oldArtist.tag());
 
 // TODO: Part six.
 // As a stretch, add a static method `Artist.named` that receives an array of instances and a
@@ -73,6 +146,8 @@ ArtistOld.prototype.tag = function () {
 // it returns. The `get` keyword from the extension is your alternative if getters caught your
 // interest.
 
+const foundArtist = Artist.named(artists, 'Johnny Cash');
+console.log(foundArtist.describe());
 
 // TODO: Save deliberately, commit with a clear message, push the branch, and open a pull request
 // into main.
